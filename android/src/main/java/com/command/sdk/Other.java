@@ -125,7 +125,7 @@ class Other {
     } 
  
  
-    private static byte[] thresholdToBWPic(Bitmap mBitmap) { 
+    public static byte[] thresholdToBWPic(Bitmap mBitmap) { 
         int[] pixels = new int[mBitmap.getWidth() * mBitmap.getHeight()]; 
         byte[] data = new byte[mBitmap.getWidth() * mBitmap.getHeight()]; 
  
@@ -145,7 +145,7 @@ class Other {
      * @param mBitmap 
      * @return 
      */ 
-    private  byte[] bitmapToBWPix(Bitmap mBitmap) { 
+    public  byte[] bitmapToBWPix(Bitmap mBitmap) { 
  
         int[] pixels = new int[mBitmap.getWidth() * mBitmap.getHeight()]; 
         byte[] data = new byte[mBitmap.getWidth() * mBitmap.getHeight()]; 
@@ -172,7 +172,7 @@ class Other {
  
     // 1行作为1个图片，这样打印不会乱 
     @SuppressWarnings("unused") 
-    private static byte[] pixToCmd(byte[] src, int nWidth, int nMode) { 
+    public static byte[] pixToCmd(byte[] src, int nWidth, int nMode) { 
         // nWidth = 384; nHeight = 582; 
         int nHeight = src.length / nWidth; 
         byte[] data = new byte[8 + (src.length / 8)]; 
@@ -196,7 +196,7 @@ class Other {
  
     } 
  
-    private static byte[] eachLinePixToCmd(byte[] src, int nWidth, int nMode) { 
+    public static byte[] eachLinePixToCmd(byte[] src, int nWidth, int nMode) { 
         int nHeight = src.length / nWidth; 
         int nBytesPerLine = nWidth / 8; 
         byte[] data = new byte[nHeight * (8 + nBytesPerLine)]; 
