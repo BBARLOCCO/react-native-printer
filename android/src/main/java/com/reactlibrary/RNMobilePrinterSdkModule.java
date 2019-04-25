@@ -16,8 +16,8 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public String showMessage() {
-      return "ASD";
+  public void showMessage(final Promise promise) {
+      promise.resolve("ASD");
   }
   @Override
   public String getName() {
