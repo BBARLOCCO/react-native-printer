@@ -15,8 +15,22 @@ import android.bluetooth.BluetoothDevice;
 import android.widget.Toast;
 import java.util.Set;
 import android.os.Handler;
+import android.os.Message;
 
 public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
+
+  // Message types sent from the BluetoothService Handler
+	public static final int MESSAGE_STATE_CHANGE = 1;
+	public static final int MESSAGE_READ = 2;
+	public static final int MESSAGE_WRITE = 3;
+	public static final int MESSAGE_DEVICE_NAME = 4;
+	public static final int MESSAGE_TOAST = 5;
+	public static final int MESSAGE_CONNECTION_LOST = 6;
+	public static final int MESSAGE_UNABLE_CONNECT = 7;
+  
+  // Key names received from the BluetoothService Handler
+  public static final String DEVICE_NAME = "device_name";
+  public static final String TOAST = "toast";
 
   private final ReactApplicationContext reactContext;
   private BluetoothAdapter mBluetoothAdapter;
@@ -26,6 +40,62 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
     this.reactContext = reactContext;
     this.bluetoothService = new BluetoothService(getReactApplicationContext(), new Handler());
   }
+
+
+	private final Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MESSAGE_STATE_CHANGE:
+				switch (msg.arg1) {
+				case BluetoothService.STATE_CONNECTED:
+          Toast.makeText(getReactApplicationContext(),
+          "Connected" ,
+          Toast.LENGTH_SHORT).show();
+					break;
+				case BluetoothService.STATE_CONNECTING:
+          Toast.makeText(getReactApplicationContext(),
+          "Connecting" ,
+          Toast.LENGTH_SHORT).show();
+					break;
+				case BluetoothService.STATE_LISTEN:
+				case BluetoothService.STATE_NONE:
+          Toast.makeText(getReactApplicationContext(),
+          "Not Connected" ,
+          Toast.LENGTH_SHORT).show();
+					break;
+				}
+				break;
+			case MESSAGE_WRITE:
+				
+				break;
+			case MESSAGE_READ:
+				
+				break;
+			case MESSAGE_DEVICE_NAME:
+				// save the connected device's name
+				String mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
+				Toast.makeText(getReactApplicationContext(),
+						"Connected to " + mConnectedDeviceName,
+						Toast.LENGTH_SHORT).show();
+				break;
+			case MESSAGE_TOAST:
+				Toast.makeText(getReactApplicationContext(),
+						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case MESSAGE_CONNECTION_LOST:    //蓝牙已断开连接
+                Toast.makeText(getReactApplicationContext(), "Device connection was lost",
+                               Toast.LENGTH_SHORT).show();
+                break;
+            case MESSAGE_UNABLE_CONNECT:     //无法连接设备
+            	Toast.makeText(getReactApplicationContext(), "Unable to connect device",
+                        Toast.LENGTH_SHORT).show();
+            	break;
+			}
+		}
+	};
+
 
   @ReactMethod 
   public void connectToDevice(String address,Promise promise){
