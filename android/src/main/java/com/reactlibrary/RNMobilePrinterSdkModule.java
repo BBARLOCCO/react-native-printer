@@ -23,10 +23,10 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   public void startConnection(final Promise promise){
     this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     if (mBluetoothAdapter == null) {
-			Toast.makeText(this, "Bluetooth is not available",
+			Toast.makeText(getReactApplicationContext(), "Bluetooth is not available",
 					Toast.LENGTH_LONG).show();
 		}else{
-      Toast.makeText(this, "Adapter granted",
+      Toast.makeText(getReactApplicationContext(), "Adapter granted",
 					Toast.LENGTH_LONG).show();
     }
   }
