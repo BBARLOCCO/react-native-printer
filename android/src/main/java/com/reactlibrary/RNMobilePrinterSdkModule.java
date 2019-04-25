@@ -1,9 +1,13 @@
 
 package com.reactlibrary;
+import com.reactlibrary.models.Device;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.Callback;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -36,8 +40,14 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   }
   @ReactMethod
   public void getPairedDevices(final Promise promise){
+    
     Set<BluetoothDevice> pairedDevices = this.mBluetoothAdapter.getBondedDevices();
-    promise.resolve(pairedDevices);
+    WritableArray devicesArray = Arguments.createArray();
+    for(BluetoothDevice device : pairedDevices){
+      Device rnDevice = new Device(device,this.mBluetoothAdapter);
+      devicesArray.pushMap(rnDevice.toJSObject(null));
+    }
+    promise.resolve(devicesArray);
   }
   @ReactMethod
   public void showMessage(final Promise promise) {
