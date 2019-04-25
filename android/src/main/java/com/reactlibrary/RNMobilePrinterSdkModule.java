@@ -34,6 +34,11 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
     
   }
   @ReactMethod
+  public void getPairedDevices(final Promise promise){
+    Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+    promise.resolve(pairedDevices);
+  }
+  @ReactMethod
   public void showMessage(final Promise promise) {
       promise.resolve("ASD");
   }
