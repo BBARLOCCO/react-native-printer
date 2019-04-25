@@ -108,13 +108,9 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   public void startConnection(final Promise promise){
     this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     if (mBluetoothAdapter == null) {
-			Toast.makeText(getReactApplicationContext(), "Bluetooth is not available",
-          Toast.LENGTH_LONG).show();
-      promise.resolve("OK");
+			promise.resolve("OK");
 		}else{
-      Toast.makeText(getReactApplicationContext(), "Adapter granted",
-          Toast.LENGTH_LONG).show();
-      promise.resolve("NOK");
+      promise.resolve("OK");
     }
     
   }
@@ -133,6 +129,26 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   public void showMessage(final Promise promise) {
       promise.resolve("ASD");
   }
+  @ReactMethod
+  public void printText(String text,Promise promise){
+		SendDataString(text);
+  }
+  private void SendDataString(String data) {
+		
+		if (bluetoothService.getState() != BluetoothService.STATE_CONNECTED) {
+			Toast.makeText(getReactApplicationContext(), "Not connected", Toast.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		if (data.length() > 0) {				
+			try {
+				bluetoothService.write(data.getBytes("GBK"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
   @Override
   public String getName() {
     return "RNMobilePrinterSdk";
