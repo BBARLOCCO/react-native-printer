@@ -2,7 +2,7 @@ package com.reactlibrary.command.sdk;
 
 import java.io.UnsupportedEncodingException;
 
-import zj.com.customize.sdk.Other;
+import com.reactlibrary.command.sdk.Other;
 
 public class PrinterCommand {
 	
