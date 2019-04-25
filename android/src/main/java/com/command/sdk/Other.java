@@ -28,65 +28,9 @@ class Other {
 //        return thresholdToBWPic(bitmap); 
     } 
  
-    public byte[] printQRCode(String qrCode) { 
-        return POS_S_SetQRcode(qrCode, 6, 4); 
-    } 
  
- 
-    // 打印条形码 
-    public byte[] POS_S_SetBarcode(String strCodedata, int nOrgx, int nType, 
-                                   int nWidthX, int nHeight, int nHriFontType, int nHriFontPosition) { 
-        if (nOrgx < 0 | nOrgx > 65535 | nType < 0x41 | nType > 0x49 
-                | nWidthX < 2 | nWidthX > 6 | nHeight < 1 | nHeight > 255) 
-            return new byte[0]; 
- 
-        byte[] bCodeData = null; 
-        try { 
-            bCodeData = strCodedata.getBytes("GBK"); 
-        } catch (UnsupportedEncodingException e) { 
-            return new byte[0]; 
-        } 
- 
-        Cmd.ESCCmd.ESC_dollors_nL_nH[2] = (byte) (nOrgx % 0x100); 
-        Cmd.ESCCmd.ESC_dollors_nL_nH[3] = (byte) (nOrgx / 0x100); 
-        Cmd.ESCCmd.GS_w_n[2] = (byte) nWidthX; 
-        Cmd.ESCCmd.GS_h_n[2] = (byte) nHeight; 
-        Cmd.ESCCmd.GS_f_n[2] = (byte) (nHriFontType & 0x01); 
-        Cmd.ESCCmd.GS_H_n[2] = (byte) (nHriFontPosition & 0x03); 
-        Cmd.ESCCmd.GS_k_m_n_[2] = (byte) nType; 
-        Cmd.ESCCmd.GS_k_m_n_[3] = (byte) bCodeData.length; 
- 
-        byte[] data = byteArraysToBytes(new byte[][]{ 
-                Cmd.ESCCmd.ESC_dollors_nL_nH, Cmd.ESCCmd.GS_w_n, 
-                Cmd.ESCCmd.GS_h_n, Cmd.ESCCmd.GS_f_n, Cmd.ESCCmd.GS_H_n, 
-                Cmd.ESCCmd.GS_k_m_n_, bCodeData}); 
-        return data; 
-    } 
- 
-    public static byte[] POS_S_SetQRcode(String strCodedata, int nWidthX, 
-                                         int nErrorCorrectionLevel) { 
- 
-        if (nWidthX < 2 | nWidthX > 6 | nErrorCorrectionLevel < 1 
-                | nErrorCorrectionLevel > 4) 
-            return new byte[0]; 
- 
-        byte[] bCodeData = null; 
-        try { 
-            bCodeData = strCodedata.getBytes("GBK"); 
-        } catch (UnsupportedEncodingException e) { 
-            return new byte[0]; 
-        } 
-        Cmd.ESCCmd.GS_w_n[2] = (byte) nWidthX; 
-        Cmd.ESCCmd.GS_k_m_v_r_nL_nH[3] = 0x00;//设置规格为6 
-        Cmd.ESCCmd.GS_k_m_v_r_nL_nH[4] = (byte) nErrorCorrectionLevel; 
-        Cmd.ESCCmd.GS_k_m_v_r_nL_nH[5] = (byte) (bCodeData.length & 0xff); 
-        Cmd.ESCCmd.GS_k_m_v_r_nL_nH[6] = (byte) ((bCodeData.length & 0xff00) >> 8); 
- 
-        byte[] data = byteArraysToBytes(new byte[][]{ 
-                Cmd.ESCCmd.GS_w_n, Cmd.ESCCmd.GS_k_m_v_r_nL_nH, bCodeData}); 
-        return data; 
- 
-    } 
+    
+
  
     public  byte[] POS_PrintPicture(Bitmap mBitmap, int nWidth, int nMode) { 
  
