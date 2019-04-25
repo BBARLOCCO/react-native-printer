@@ -8,6 +8,7 @@ import com.facebook.react.bridge.Callback;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.widget.Toast;
+import java.util.Set;
 
 public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 
@@ -35,7 +36,7 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   }
   @ReactMethod
   public void getPairedDevices(final Promise promise){
-    Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+    Set<BluetoothDevice> pairedDevices = this.mBluetoothAdapter.getBondedDevices();
     promise.resolve(pairedDevices);
   }
   @ReactMethod
