@@ -93,6 +93,7 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
     super(reactContext);
     this.reactContext = reactContext;
     this.bluetoothService = new BluetoothService(getReactApplicationContext(), mHandler);
+    this.bluetoothService.start();
   }
 
 
