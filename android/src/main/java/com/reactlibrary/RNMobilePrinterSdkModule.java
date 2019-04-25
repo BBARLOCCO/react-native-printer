@@ -16,8 +16,8 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void showMessage() {
-      Toast.makeText(reactContext.getApplicationContext(), "NATIVE CODE IS WORKING", Toast.LENGTH_LONG).show();
+  public String showMessage() {
+      return "ASD";
   }
   @Override
   public String getName() {
