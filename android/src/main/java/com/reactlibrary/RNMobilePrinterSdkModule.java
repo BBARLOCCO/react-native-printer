@@ -35,14 +35,7 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   private final ReactApplicationContext reactContext;
   private BluetoothAdapter mBluetoothAdapter;
   private BluetoothService bluetoothService;
-  public RNMobilePrinterSdkModule(ReactApplicationContext reactContext) {
-    super(reactContext);
-    this.reactContext = reactContext;
-    this.bluetoothService = new BluetoothService(getReactApplicationContext(), new Handler());
-  }
-
-
-	private final Handler mHandler = new Handler() {
+  private final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -95,6 +88,15 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 			}
 		}
 	};
+
+  public RNMobilePrinterSdkModule(ReactApplicationContext reactContext) {
+    super(reactContext);
+    this.reactContext = reactContext;
+    this.bluetoothService = new BluetoothService(getReactApplicationContext(), new Handler());
+  }
+
+
+	
 
 
   @ReactMethod 
