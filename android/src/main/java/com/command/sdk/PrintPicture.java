@@ -1,7 +1,8 @@
 package com.reactlibrary.command.sdk;
-
-import zj.com.customize.sdk.Other;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.io.ByteArrayOutputStream;
+import zj.com.customize.sdk.Other;
 
 public class PrintPicture {
 
