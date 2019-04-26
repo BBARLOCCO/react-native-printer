@@ -1,5 +1,6 @@
 
 package com.reactlibrary;
+import com.reactlibrary.command.sdk.PrinterCommand;
 import com.reactlibrary.models.Device;
 import com.reactlibrary.service.BluetoothService;
 import com.facebook.react.bridge.Promise;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import java.util.Set;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 
@@ -92,8 +94,9 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   public RNMobilePrinterSdkModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
+    Log.i("BluetoothService","Construyo Module");
     this.bluetoothService = new BluetoothService(getReactApplicationContext(), mHandler);
-    this.bluetoothService.start();
+    
   }
 
 
@@ -102,16 +105,27 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod 
   public void connectToDevice(String address,Promise promise){
+    Log.d("BluetoothService",address);
     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+    Log.d("BluetoothService","Connect to device");
+    Log.d("BluetoothService",device.getName());
+    Log.d("BluetoothService",device.getAddress());
     this.bluetoothService.connect(device);
+    promise.resolve("Name:"+device.getName());
+  }
+  @ReactMethod
+  public void stopConnection(final Promise promise){
+    this.bluetoothService.stop();
+    promise.resolve(true);
   }
   @ReactMethod
   public void startConnection(final Promise promise){
     this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     if (mBluetoothAdapter == null) {
-			promise.resolve("OK");
+			promise.resolve(false);
 		}else{
-      promise.resolve("OK");
+      this.bluetoothService.start();
+      promise.resolve(true);
     }
     
   }
@@ -132,7 +146,14 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   }
   @ReactMethod
   public void printText(String text,Promise promise){
-		SendDataString(text);
+    SendDataString(text+"\n\n\n");
+
+    promise.resolve(true);
+  }
+  @ReactMethod
+  public void cutPaper(Promise promise){
+    bluetoothService.write(PrinterCommand.POS_Set_Cut(1));
+    promise.resolve(true);
   }
   private void SendDataString(String data) {
 		
