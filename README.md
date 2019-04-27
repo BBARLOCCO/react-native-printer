@@ -1,5 +1,6 @@
 
 # react-native-mobile-printer-sdk
+Package to connect and print using Bluetooth POS Printer.
 
 ## Getting started
 
@@ -8,11 +9,12 @@
 ### Mostly automatic installation
 
 `$ react-native link react-native-mobile-printer-sdk`
+Add perimsions for BLUETOOTH on your manifest.
 
 ### Manual installation
 
 
-#### iOS
+#### iOS -- TODO -- Noothing done on iOS yet.
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `react-native-mobile-printer-sdk` and add `RNMobilePrinterSdk.xcodeproj`
@@ -33,14 +35,6 @@
   	```
       compile project(':react-native-mobile-printer-sdk')
   	```
-
-#### Windows
-[Read it! :D](https://github.com/ReactWindows/react-native)
-
-1. In Visual Studio add the `RNMobilePrinterSdk.sln` in `node_modules/react-native-mobile-printer-sdk/windows/RNMobilePrinterSdk.sln` folder to their solution, reference from their app.
-2. Open up your `MainPage.cs` app
-  - Add `using Mobile.Printer.Sdk.RNMobilePrinterSdk;` to the usings at the top of the file
-  - Add `new RNMobilePrinterSdkPackage()` to the `List<IReactPackage>` returned by the `Packages` method
 
 
 ## Usage
