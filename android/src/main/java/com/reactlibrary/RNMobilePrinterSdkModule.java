@@ -44,20 +44,14 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 			case MESSAGE_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BluetoothService.STATE_CONNECTED:
-          Toast.makeText(getReactApplicationContext(),
-          "Connected" ,
-          Toast.LENGTH_SHORT).show();
+          
 					break;
 				case BluetoothService.STATE_CONNECTING:
-          Toast.makeText(getReactApplicationContext(),
-          "Connecting" ,
-          Toast.LENGTH_SHORT).show();
+          
 					break;
 				case BluetoothService.STATE_LISTEN:
 				case BluetoothService.STATE_NONE:
-          Toast.makeText(getReactApplicationContext(),
-          "Not Connected" ,
-          Toast.LENGTH_SHORT).show();
+          
 					break;
 				}
 				break;
@@ -70,9 +64,9 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
 				String mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-				Toast.makeText(getReactApplicationContext(),
+				/*Toast.makeText(getReactApplicationContext(),
 						"Connected to " + mConnectedDeviceName,
-						Toast.LENGTH_SHORT).show();
+						Toast.LENGTH_SHORT).show();*/
 				break;
 			case MESSAGE_TOAST:
 				Toast.makeText(getReactApplicationContext(),
@@ -80,12 +74,10 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 						.show();
 				break;
 			case MESSAGE_CONNECTION_LOST:    //蓝牙已断开连接
-                Toast.makeText(getReactApplicationContext(), "Device connection was lost",
-                               Toast.LENGTH_SHORT).show();
+                
                 break;
             case MESSAGE_UNABLE_CONNECT:     //无法连接设备
-            	Toast.makeText(getReactApplicationContext(), "Unable to connect device",
-                        Toast.LENGTH_SHORT).show();
+            	
             	break;
 			}
 		}
@@ -176,8 +168,6 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   private void SendDataString(String data) {
 		
 		if (bluetoothService.getState() != BluetoothService.STATE_CONNECTED) {
-			Toast.makeText(getReactApplicationContext(), "Not connected", Toast.LENGTH_SHORT)
-					.show();
 			return;
 		}
 		if (data.length() > 0) {				

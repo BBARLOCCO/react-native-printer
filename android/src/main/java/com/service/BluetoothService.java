@@ -86,11 +86,7 @@ public class BluetoothService {
     private synchronized void setState(int state) {
         if (DEBUG) Log.d(TAG, "setState() " + mState + " -> " + state);
         mState = state;
-        if(state!=2){
-            Toast.makeText(this.context,
-            "State:"+String.valueOf(state),
-            Toast.LENGTH_SHORT).show();
-        }
+        
         // Give the new state to the Handler so the UI Activity can update
         mHandler.obtainMessage(MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
     }
@@ -105,9 +101,7 @@ public class BluetoothService {
      * Start the service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume() */
     public synchronized void start() {
-        Toast.makeText(this.context,
-        "Startt",
-        Toast.LENGTH_SHORT).show();
+        
         if (DEBUG) Log.d(TAG, "start");
 
         // Cancel any thread attempting to make a connection
