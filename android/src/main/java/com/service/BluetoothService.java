@@ -274,7 +274,7 @@ public class BluetoothService {
                     // successful connection or an exception
                     Log.i(TAG,"275");
                     socket = mmServerSocket.accept();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Log.i(TAG, "accept() failed", e);
                     break;
                 }

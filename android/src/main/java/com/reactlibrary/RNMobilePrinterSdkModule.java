@@ -131,8 +131,12 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
       if (mBluetoothAdapter == null) {
         promise.resolve(false);
       }else{
-        this.bluetoothService.start();
-        promise.resolve(true);
+        if(this.mBluetoothAdapter.isEnabled()){
+          this.bluetoothService.start();
+          promise.resolve(true);
+        }else{
+          promise.resolve(false);
+        }
       }
     }catch(Exception e){
       Log.i("BluetoothService",e.getMessage());
