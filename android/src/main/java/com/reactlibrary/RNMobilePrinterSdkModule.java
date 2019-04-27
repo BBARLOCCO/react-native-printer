@@ -98,62 +98,72 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
     this.bluetoothService = new BluetoothService(getReactApplicationContext(), mHandler);
     
   }
-
-
-	
-
-
+  
   @ReactMethod 
   public void connectToDevice(String address,Promise promise){
-    Log.d("BluetoothService",address);
-    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-    Log.d("BluetoothService","Connect to device");
-    Log.d("BluetoothService",device.getName());
-    Log.d("BluetoothService",device.getAddress());
-    this.bluetoothService.connect(device);
-    promise.resolve("Name:"+device.getName());
+    try{
+      Log.d("BluetoothService",address);
+      BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+      Log.d("BluetoothService","Connect to device");
+      Log.d("BluetoothService",device.getName());
+      Log.d("BluetoothService",device.getAddress());
+      this.bluetoothService.connect(device);
+      promise.resolve(true);
+    }catch(Exception e){
+      Log.i("BluetoothService",e.getMessage());
+      promise.resolve(false);
+    }
   }
   @ReactMethod
   public void stopConnection(final Promise promise){
-    this.bluetoothService.stop();
-    promise.resolve(true);
+    try{
+      this.bluetoothService.stop();
+      promise.resolve(true);
+    }catch(Exception e){
+      Log.i("BluetoothService",e.getMessage());
+      promise.resolve(false);
+    }
   }
   @ReactMethod
   public void startConnection(final Promise promise){
-    this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    if (mBluetoothAdapter == null) {
-			promise.resolve(false);
-		}else{
-      this.bluetoothService.start();
-      promise.resolve(true);
+    try{
+      this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+      if (mBluetoothAdapter == null) {
+        promise.resolve(false);
+      }else{
+        this.bluetoothService.start();
+        promise.resolve(true);
+      }
+    }catch(Exception e){
+      Log.i("BluetoothService",e.getMessage());
+      promise.resolve(false);
     }
     
   }
   @ReactMethod
   public void getPairedDevices(final Promise promise){
-    
-    Set<BluetoothDevice> pairedDevices = this.mBluetoothAdapter.getBondedDevices();
-    WritableArray devicesArray = Arguments.createArray();
-    for(BluetoothDevice device : pairedDevices){
-      Device rnDevice = new Device(device,this.mBluetoothAdapter);
-      devicesArray.pushMap(rnDevice.toJSObject(null));
+    try{
+      Set<BluetoothDevice> pairedDevices = this.mBluetoothAdapter.getBondedDevices();
+      WritableArray devicesArray = Arguments.createArray();
+      for(BluetoothDevice device : pairedDevices){
+        Device rnDevice = new Device(device,this.mBluetoothAdapter);
+        devicesArray.pushMap(rnDevice.toJSObject(null));
+      }
+      promise.resolve(devicesArray);
+    }catch(Exception e){
+      Log.i("BluetoothService",e.getMessage());
+      promise.resolve(false);
     }
-    promise.resolve(devicesArray);
-  }
-  @ReactMethod
-  public void showMessage(final Promise promise) {
-      promise.resolve("ASD");
   }
   @ReactMethod
   public void printText(String text,Promise promise){
-    SendDataString(text+"\n\n\n");
-
-    promise.resolve(true);
-  }
-  @ReactMethod
-  public void cutPaper(Promise promise){
-    bluetoothService.write(PrinterCommand.POS_Set_Cut(1));
-    promise.resolve(true);
+    try{
+      SendDataString(text+"\n\n\n");
+      promise.resolve(true);
+    }catch(Exception e){
+      Log.i("BluetoothService",e.getMessage());
+      promise.resolve(false);
+    }
   }
   private void SendDataString(String data) {
 		
