@@ -162,8 +162,12 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void printText(String text,Promise promise){
     try{
-      SendDataString(text+"\n\n\n");
-      promise.resolve(true);
+      if(bluetoothService.getState() != BluetoothService.STATE_CONNECTED){
+        promise.resolve(false);
+      }else{
+        SendDataString(text+"\n\n\n");
+        promise.resolve(true);
+      }
     }catch(Exception e){
       Log.i("BluetoothService",e.getMessage());
       promise.resolve(false);
