@@ -69,9 +69,11 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 						Toast.LENGTH_SHORT).show();*/
 				break;
 			case MESSAGE_TOAST:
-				Toast.makeText(getReactApplicationContext(),
+				/*Toast.makeText(getReactApplicationContext(),
 						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
-						.show();
+            .show();*/
+        
+        Log.i("BluetoothService",	msg.getData().getString(TOAST));
 				break;
 			case MESSAGE_CONNECTION_LOST:    //蓝牙已断开连接
                 
