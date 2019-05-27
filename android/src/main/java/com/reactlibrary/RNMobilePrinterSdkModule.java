@@ -13,6 +13,7 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.Callback;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.os.Looper;
 import android.widget.Toast;
 import java.util.Set;
 import android.os.Handler;
@@ -37,29 +38,29 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
   private final ReactApplicationContext reactContext;
   private BluetoothAdapter mBluetoothAdapter;
   private BluetoothService bluetoothService;
-  private final Handler mHandler = new Handler() {
+  private final Handler mHandler = new Handler(Looper.getMainLooper()) {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MESSAGE_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BluetoothService.STATE_CONNECTED:
-          
+
 					break;
 				case BluetoothService.STATE_CONNECTING:
-          
+
 					break;
 				case BluetoothService.STATE_LISTEN:
 				case BluetoothService.STATE_NONE:
-          
+
 					break;
 				}
 				break;
 			case MESSAGE_WRITE:
-				
+
 				break;
 			case MESSAGE_READ:
-				
+
 				break;
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
@@ -72,14 +73,14 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 				/*Toast.makeText(getReactApplicationContext(),
 						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
             .show();*/
-        
+
         Log.i("BluetoothService",	msg.getData().getString(TOAST));
 				break;
 			case MESSAGE_CONNECTION_LOST:    //蓝牙已断开连接
-                
+
                 break;
             case MESSAGE_UNABLE_CONNECT:     //无法连接设备
-            	
+
             	break;
 			}
 		}
