@@ -174,7 +174,7 @@ public class RNMobilePrinterSdkModule extends ReactContextBaseJavaModule {
 		}
 		if (data.length() > 0) {				
 			try {
-				bluetoothService.write(data.getBytes("GBK"));
+				bluetoothService.write(data.getBytes("CP437"));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
